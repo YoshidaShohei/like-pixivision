@@ -24,7 +24,7 @@ class BlogController extends Controller
     
     // フォームから画像が送信されてきたら、保存して、$news->image_path に画像のパスを保存する
     if (isset($form['image'])) {
-        $path = $request->file('image')->store('public/image');
+        $path = $request->file('image')->store('public/images');
         $blog->image_path = basename($path);
     } else {
         $blog->image_path = null;
@@ -45,8 +45,8 @@ class BlogController extends Controller
     $cond_title = $request->cond_title;
         // dd(__LINE__);
     if ($cond_title != '') {
-    // 検索されたら検索結果を取得する
-        $posts = Blog::where('title', $cond_title)->get();
+    // 検索されたら検索結果を取得する(部分一致可)
+        $posts = Blog::where('title', 'like', '%'.$cond_title.'%')->get();
     } else {
     // それ以外はすべてのニュースを取得する
         $posts = Blog::all();
@@ -77,7 +77,7 @@ class BlogController extends Controller
       if ($request->remove == 'true') {
           $blog_form['image_path'] = null;
       } elseif ($request->file('image')) {
-          $path = $request->file('image')->store('public/image');
+          $path = $request->file('image')->store('public/images');
           $blog_form['image_path'] = basename($path);
       } else {
           $blog_form['image_path'] = $blog->image_path;

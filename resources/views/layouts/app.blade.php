@@ -33,14 +33,13 @@
                     <a class="navbar-brand" href="{{ url('/') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
-                <form action="{{ action('Admin\BlogController@index') }}" method="get" class="form-inline">
-                            <input type="text" class="form-control" name="cond_title" value="{{ $cond_title }}">
-                            {{ csrf_field() }}
-                            <!--<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+                <form action="{{ action('MemberController@index') }}" method="get" class="form-inline">
+                    <input type="text" class="form-control" name="cond_title" value="{{ $cond_title }}">
+                    {{ csrf_field() }}
+                    <button type="submit" class="btn btn-outline-light btn-square">
+                        <i class="fas fa-search fa-lg"></i>
+                    </button>
                 </form>
-                <button type="submit" class="btn btn-outline-light btn-square">
-                <i class="fas fa-search fa-lg"></i>
-                </button>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>

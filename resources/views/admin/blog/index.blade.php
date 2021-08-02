@@ -6,21 +6,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <a href="{{ action('Admin\BlogController@add') }}" role="button" class="btn btn-primary">新規作成</a>
-            </div>
-            <div class="col-md-8">
-                <form action="{{ action('Admin\BlogController@index') }}" method="get">
-                    <div class="form-group row">
-                        <label class="col-md-2">タイトル</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" name="cond_title" value="{{ $cond_title }}">
-                        </div>
-                        <div class="col-md-2">
-                            {{ csrf_field() }}
-                            <input type="submit" class="btn btn-primary" value="検索">
-                        </div>
-                    </div>
-                </form>
+                <a href="{{ action('Admin\BlogController@create') }}" role="button" class="btn btn-primary">新規作成</a>
             </div>
         </div>
         <div class="row">
@@ -39,7 +25,7 @@
                                 <tr>
                                     <th>{{ $blog->id }}</th>
                                     <td>{{ \Str::limit($blog->title, 100) }}</td>
-                                    <td>{{ \Str::limit($blog->body, 250) }}</td>
+                                    <td>{{ \Str::limit($blog->tag, 250) }}</td>
                                     <td>
                                         <div>
                                             <a href="{{ action('Admin\BlogController@edit', ['id' => $blog->id]) }}">編集</a>

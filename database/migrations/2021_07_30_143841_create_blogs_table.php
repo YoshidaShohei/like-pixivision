@@ -16,7 +16,7 @@ class CreateBlogsTable extends Migration
         Schema::create('blogs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title'); // ニュースのタイトルを保存するカラム
-            $table->string('body');  // ニュースの本文を保存するカラム
+            $table->string('tag');  // ニュースの本文を保存するカラム
             $table->string('image_path')->nullable();  // 画像のパスを保存するカラム
             $table->timestamps();
         });
