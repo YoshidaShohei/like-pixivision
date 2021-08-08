@@ -16,6 +16,11 @@ Route::get('/search', 'SearchController@index');
 Route::get('palody-image/{id}', 'Admin\BlogController@image')->middleware('auth');
 Route::get('tag-image/{id}', 'Admin\TagController@image')->middleware('auth');
 Route::get('artist-image/{id}', 'Admin\ArtistController@image')->middleware('auth');
+//コンタクト用
+Route::get('/contact' , 'ContactController@index')->name('contact.index');//送信用
+Route::post('/contact/confirm' , 'ContactController@confirm')->name('contact.confirm');//確認用
+Route::post('/contact/thanks' , 'ContactController@thanks')->name('contact.thanks');//お問い合わせありがとう
+
 //管理者用
 Route::get('/admin', 'Admin\BlogController@index');
 

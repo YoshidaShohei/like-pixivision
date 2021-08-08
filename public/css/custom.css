@@ -125,3 +125,60 @@ body {
   margin-right: 5px;
 }
 
+.about-box {
+  border: 1px solid #f7f7f7;
+  display: inline-block;
+  padding: 2em;
+  width: 100%;
+}
+
+.about-box > h2 {
+  color: white;
+  border-bottom: 0.5px solid #f7f7f7;
+  padding-bottom: 0.2em;
+  padding-top: 0.5em;
+}
+
+.about-box > p {
+  color: white;
+}
+
+.about-border {
+  border-bottom: 0.1px solid #f7f7f7;
+  padding-top: 0.2em;
+}
+
+input.contact-box {
+  width: 75%;
+}
+
+textarea.contact-box {
+  width: 75%;
+  margin-bottom: 10px;
+}
+
+.input-container {
+  display: inline-block;
+}
+
+.send-button {
+  margin-bottom: 25px;
+  width: 30%;
+  transition: all 0.5s ease-in-out;
+}
+
+.send-button:hover {
+  background: white;
+  color: #489CD0;
+}
+
+.form-group > h4 {
+  color: #fff;
+  border-bottom: 0.5px solid #f7f7f7;
+  display: inline-block;
+}
+
+.form-group > p {
+  color: #fff;
+}
+

@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class TagBlog extends Model
 {
     protected $guarded = array('id');
+    
+    public function image() 
+    {
+        return $this->hasMany('App\TagBlogImage');
+    }
 
-    // // 以下を追記
-    // public static $rules = array(
-    //     'title' => 'required',
-    //     'tag' => 'required',
-    //     );
+
 }

@@ -25,16 +25,19 @@ class TagController extends Controller
     // dd($form);
     // フォームから画像が送信されてきたら、保存して、$news->image_path に画像のパスを保存する
     if (isset($form['tag_image_path'])) {
-        if (is_array($form['tag_image_path'])){
+        {
+        // if (is_array($form['tag_image_path'])){
             $sort_number = 1;
+            // dd($form['tag_image_path']);
             foreach ($form['tag_image_path'] as $image_path) {
                 $tag_path = $request->file('tag_image_path')->store('public/images');
                 $tag_blog->tag_image_path = basename($tag_path);
                 $sort_number ++;
             }
         }
-        $tag_path = $request->file('tag_image_path')->store('public/images');
-        $tag_blog->tag_image_path = basename($tag_path);
+        // // $tag_path = $request->file('tag_image_path')->store('public/images');
+        // $tag_path = $request->file('tag_image_path')->storeAs('images', $tag_blog);
+        // $tag_blog->tag_image_path = basename($tag_path);
     } else {
         $tag_blog->tag_image_path = null;
     }
@@ -45,7 +48,7 @@ class TagController extends Controller
     // フォームから送信されてきたimageを削除する
     unset($form['tag_image_path']);
     // データベースに保存する
-    $tag_blog->fill($form);
+    $tag_blog->fill($tag_path);
     $tag_blog->save();
     return redirect('admin/blog/tag/create');
     }
