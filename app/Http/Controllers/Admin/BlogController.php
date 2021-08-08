@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use App\Blog;
 
 class BlogController extends Controller
@@ -12,46 +13,40 @@ class BlogController extends Controller
     {
         return view('admin.blog.create');
     }
-    
-    public function create(Request $request)
+
+    public function palodyCreate(Request $request)
     {
     // 以下を追記
     // Varidationを行う
-    $this->validate($request, Blog::$rules);
+    // $this->validate($request, Blog::$rules);
     
-    $blog = new Blog;
+    $palody_blog = new Blog;
     $form = $request->all();
     
     // フォームから画像が送信されてきたら、保存して、$news->image_path に画像のパスを保存する
-    if (isset($form['image'])) {
-        $path = $request->file('image')->store('public/images');
-        $blog->image_path = basename($path);
+    if (isset($form['palody_image_path'])) {
+        $palody_path = $request->file('palody_image_path')->store('public/images');
+        $palody_blog->palody_image_path = basename($palody_path);
     } else {
-        $blog->image_path = null;
+        $palody_blog->palody_image_path = null;
     }
     
     // フォームから送信されてきた_tokenを削除する
     unset($form['_token']);
     // フォームから送信されてきたimageを削除する
-    unset($form['image']);
+    unset($form['palody_image_path']);
     // データベースに保存する
-    $blog->fill($form);
-    $blog->save();
+    $palody_blog->fill($form);
+    $palody_blog->save();
     return redirect('admin/blog/create');
     }
-    
+
     public function index(Request $request)
     {
-    $cond_title = $request->cond_title;
-        // dd(__LINE__);
-    if ($cond_title != '') {
-    // 検索されたら検索結果を取得する(部分一致可)
-        $posts = Blog::where('title', 'like', '%'.$cond_title.'%')->get();
-    } else {
-    // それ以外はすべてのニュースを取得する
-        $posts = Blog::all();
-    }
-        return view('admin/blog/index', ['posts' => $posts, 'cond_title' => $cond_title]);
+    
+    // $palodies_posts = DB::table('blogs')->select('palody_title', 'palody_tag', 'palody_image_path')->get();
+    // dd($palodies_posts);
+        return view('admin.blog.index');
     }    
     
   public function edit(Request $request)
@@ -102,4 +97,36 @@ class BlogController extends Controller
       return redirect('/');
   }  
   
+  public function image($id) {
+      $palody = Blog::where('id', $id)
+               ->select([
+                   'palody_title',
+                   'palody_tag',
+                   ])
+               ->first($id);
+            //   dd($images);
+      
+      $images = Blog::where('id', $id)
+               ->select([
+                   'palody_image_path',
+                   ])
+               ->get($id);
+            //   dd($images);            
+      return view('member.palodyImage', ['palody' => $palody, 'images' => $images]);
+  }
+  
+    public function search(Request $request)
+    {
+    $cond_title = $request->cond_title;
+        // dd(__LINE__);
+    if ($cond_title != '') {
+    // 検索されたら検索結果を取得する(部分一致可)
+        $posts = Blog::where('title', 'like', '%'.$cond_title.'%')->get();
+    } else {
+    // それ以外はすべてのニュースを取得する
+        $posts = Blog::all();
+    }
+    
+    return view('member.palodyImage', ['posts' => $posts, 'cond_title' => $cond_title]);  
+    }
 }

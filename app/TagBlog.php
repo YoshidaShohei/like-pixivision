@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Blog extends Model
+class TagBlog extends Model
 {
     protected $guarded = array('id');
 

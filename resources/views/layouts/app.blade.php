@@ -33,8 +33,8 @@
                     <a class="navbar-brand" href="{{ url('/') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
-                <form action="{{ action('MemberController@index') }}" method="get" class="form-inline">
-                    <input type="text" class="form-control" name="cond_title" value="{{ $cond_title }}">
+                <form action="{{ action('SearchController@index') }}" method="get" class="form-inline">
+                    <input type="text" class="form-control" name="cond_title">
                     {{ csrf_field() }}
                     <button type="submit" class="btn btn-outline-light btn-square">
                         <i class="fas fa-search fa-lg"></i>
