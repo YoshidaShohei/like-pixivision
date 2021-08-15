@@ -25,8 +25,13 @@
     <div class="row">
         @foreach($tags_posts as $tag_blog)
             <div class="card card-margin mx-auto" style="width: 12em;">
-            <a href="/tag-image/{{ $tag_blog->id }}">
-            <img src="{{ asset('storage/images/' . $tag_blog->tag_image_path) }}" class="card-img-top">
+                <a href="/tag-image/{{ $tag_blog->id }}">
+                <!--<img src="{{ asset('storage/images/' . $tag_blog->tag_image_path) }}" class="card-img-top">-->
+                @if ($tag_blog->image != null)
+                @foreach ($tag_blog->image as $image)
+                <img src="{{ asset('storage/images') . $image }}" class="card-img-top">
+                @endforeach
+                @endif
                 <div class="card-body">
                     <h5 class="card-title">{{ $tag_blog->tag_title }}</h5>
                 </div>

@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\ArtistBlog;
+use Storage;
+//画像リサイズ
+use Image;
 
 class ArtistController extends Controller
 {
@@ -25,9 +28,25 @@ class ArtistController extends Controller
     
     // フォームから画像が送信されてきたら、保存して、$news->image_path に画像のパスを保存する
     if (isset($form['artist_image_path'])) {
+        // $artist_image = $request->file('artist_image_path');
+        // $artist_image_path = Storage::disk('s3')->putFile('image', $artist_image, 'public
+        //画像読み込み
+        $image = Image::make($form['artist_image_path']);
+        //EXIFをOrientationによって回転
+        $image = orientate();
+        $image->resize(600, null,
+        function ($constraint) {
+        //縦横比固定
+        $constraint->aspectRatio();
+        // 小さい画像は大きくしない
+        $constraint->upsize();
+        
         $artist_path = $request->file('artist_image_path')->store('public/images');
         $artist_blog->artist_image_path = basename($artist_path);
-    } else {
+        }
+    );
+    }
+    else {
         $artist_blog->artist_image_path = null;
     }
     
