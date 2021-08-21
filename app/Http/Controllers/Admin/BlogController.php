@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Blog;
+use App\TagBlogImage;
 use Strage;
 
 //画像リサイズ
@@ -20,29 +21,44 @@ class BlogController extends Controller
 
     public function palodyCreate(Request $request)
     {
-    // 以下を追記
-    // Varidationを行う
-    // $this->validate($request, Blog::$rules);
-    
-    $palody_blog = new Blog;
-    $form = $request->all();
-    
-    // フォームから画像が送信されてきたら、保存して、$news->image_path に画像のパスを保存する
-    if (isset($form['palody_image_path'])) {
-        $palody_path = $request->file('palody_image_path')->store('public/images');
-        $palody_blog->palody_image_path = basename($palody_path);
-    } else {
-        $palody_blog->palody_image_path = null;
-    }
-    
-    // フォームから送信されてきた_tokenを削除する
-    unset($form['_token']);
-    // フォームから送信されてきたimageを削除する
-    unset($form['palody_image_path']);
-    // データベースに保存する
-    $palody_blog->fill($form);
-    $palody_blog->save();
-    return redirect('admin/blog/create');
+        // 以下を追記
+        // Varidationを行う
+        // $this->validate($request, Blog::$rules);
+
+        $palody_blog = new Blog;
+        $form = $request->all();
+
+
+        // フォームから送信されてきた_tokenを削除する
+        unset($form['_token']);
+        // フォームから送信されてきたimageを削除する
+        unset($form['palody_image_path']);
+
+        // データベースに保存する
+        $palody_blog->fill($form);
+        $palody_blog->save();
+
+        $palody_blog_id = $palody_blog->id;
+
+        // インスタンス作成
+        $blog_image = new TagBlogImage;
+
+        if ($request->hasfile('palody_image_path')) {
+            // 複数登録するので、モデルを複製する
+            $blog_image = clone $blog_image;
+            $sort_number = 1 ;
+            foreach ($request->file('palody_image_path') as $image) {
+                // ファイルを保存
+                $path = $image->store('public/image');
+                $blog_image->tag_image_path = basename($path);
+                $blog_image->tag_blogs_id = $palody_blog_id;
+                $blog_image->sort_number = $sort_number;
+                $blog_image->save();
+                $sort_number ++;
+            }
+        }
+
+        return redirect('admin/blog/create');
     }
 
     public function index(Request $request)
