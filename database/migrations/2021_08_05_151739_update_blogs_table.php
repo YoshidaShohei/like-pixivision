@@ -13,7 +13,7 @@ class UpdateBlogsTable extends Migration
      */
     public function up()
     {
-        Schema::table('myblog', function (Blueprint $table) {
+        Schema::create('myblog', function (Blueprint $table) {
             //
             $table->string('palody_title')->nullable(); // ニュースのタイトルを保存するカラム
             $table->string('palody_tag')->nullable();  // ニュースの本文を保存するカラム

@@ -29,7 +29,7 @@
                         <div class="form-group row">
                             <label class="col-md-2">作品別画像</label>
                             <div class="col-md-10">
-                                <input type="file" class="form-control-file" name="palody_image_path" multiple="multiple"/>
+                                <input type="file" class="form-control-file" name="palody_image_path[]" multiple="multiple"/>
                             </div>
                         </div>
                         {{ csrf_field() }}
