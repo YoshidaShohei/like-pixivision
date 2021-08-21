@@ -13,4 +13,10 @@ class Blog extends Model
     //     'title' => 'required',
     //     'tag' => 'required',
     //     );
+    
+    public function images() {
+        return $this->hasMany('App\TagBlogImage', 'tag_blog_id');
+        
+    }
+    
 }

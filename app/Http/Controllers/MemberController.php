@@ -14,14 +14,17 @@ class MemberController extends Controller
     public function index(Request $request)
     {
     
-    $palodies_posts = DB::table('blogs')->get();
-    $artists_posts = DB::table('artist_blogs')->get();
-    $tags_posts = DB::table('tag_blogs')->get();
+        $palodies_posts = DB::table('blogs')->get();
+        $artists_posts = DB::table('artist_blogs')->get();
+        $tags_posts = TagBlog::all();
     
-    return view('member.index', [
-                                'palodies_posts' => $palodies_posts,
-                                'tags_posts' => $tags_posts,
-                                'artists_posts' => $artists_posts
-                                ]);
+        $blogs = Blog::all();
+    
+        return view('member.index', [
+            'palodies_posts' => $palodies_posts,
+            'tags_posts' => $tags_posts,
+            'artists_posts' => $artists_posts,
+            'blogs' => $blogs,
+        ]);
     }    
 }

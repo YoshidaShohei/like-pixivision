@@ -8,9 +8,9 @@ class TagBlog extends Model
 {
     protected $guarded = array('id');
     
-    public function image() 
+    public function images() 
     {
-        return $this->hasMany('App\TagBlogImage');
+        return $this->hasMany('App\TagBlogImage', 'tag_blog_id');
     }
 
 
